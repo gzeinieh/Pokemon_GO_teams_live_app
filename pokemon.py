@@ -30,6 +30,7 @@ def event_stream_chat():
     pubsub_chat.subscribe('chat')
     for message in pubsub_chat.listen():
         if message['data'] != 1 and not message['data'] == b'anonymous: ':
+            # TODO fix this bug: publishing empty messages to chat channel
             print(message)
             yield 'data: %s\n\n' % message['data'].decode(encoding='utf-8',errors='ignore')
 
@@ -255,6 +256,7 @@ class Listener(StreamListener):
         self.redd = 0
         self.blue = 0
         self.delimiter = '||||app_delimiter||||'
+        # TODO create two channels: one for tweets and one for counts
 
 
     def on_data(self, data):
